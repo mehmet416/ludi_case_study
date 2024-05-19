@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ludi</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="{% url 'index' %}" class="navbar-title">ludi</a>
+        </div>
+        <div class="navbar-links">
+            <a href="{% url 'users' %}">Users</a>
+            <a href="{% url 'simulations' %}">Simulations</a>
+            <a href="{% url 'companies' %}">Companies</a>
+        </div>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

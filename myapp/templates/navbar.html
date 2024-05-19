@@ -1,0 +1,34 @@
+<style>
+  /* Styles copied from base.html */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+  }
+  .navbar-brand a {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0056b3;
+  }
+  .navbar-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+  }
+  .navbar-links a:hover {
+    color: darkblue;
+  }
+</style>
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="{% url 'index' %}" class="navbar-title">ludi</a>
+  </div>
+  <div class="navbar-links">
+    <a href="{% url 'users' %}">Users</a>
+    <a href="{% url 'simulations' %}">Simulations</a>
+    <a href="{% url 'companies' %}">Companies</a>
+  </div>
+</nav>

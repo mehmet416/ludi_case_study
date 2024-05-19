@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sortable:hover {
+            cursor: pointer;
+            color: darkblue;
+        }
+        .progress-bar {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Users</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="sortable" onclick="sortTable(0)">Index</th>
+                <th class="sortable" onclick="sortTable(1)">User ID</th>
+                <th class="sortable" onclick="sortTable(2)">Username</th>
+                <th class="sortable" onclick="sortTable(3)">User Surname</th>
+                <th class="sortable" onclick="sortTable(4)">Simulation ID</th>
+                <th class="sortable" onclick="sortTable(5)">Simulation Name</th>
+                <th class="sortable" onclick="sortTable(6)">Signup Date Time</th>
+                <th class="sortable" onclick="sortTable(7)">Progress Percent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.user_id }}</td>
+                <td>{{ user.user_name }}</td>
+                <td>{{ user.user_surname }}</td>
+                <td>{{ user.simulation_id }}</td>
+                <td>{{ user.simulation_name }}</td>
+                <td>{{ user.time_elapsed_formatted  }}</td>  <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ user.progress_percent }}%;" aria-valuenow="{{ user.progress_percent }}" aria-valuemin="0" aria-valuemax="100">{{ user.progress_percent }}%</div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  <script>
+        function sortTable(n) {
+            const table = document.querySelector('table');
+            let rows = Array.from(table.rows).slice(1);
+            let isAsc = table.rows[0].cells[n].classList.toggle('asc');
+
+            rows.sort((row1, row2) => {
+                let cell1 = row1.cells[n].textContent.trim();
+                let cell2 = row2.cells[n].textContent.trim();
+
+                // Remove all characters except numbers, ".", "+" or "-".
+                cell1 = cell1.replace(/[^0-9\-+\.]/g, "");
+                cell2 = cell2.replace(/[^0-9\-+\.]/g, "");
+
+                // Convert both cells to numbers for proper comparison
+                cell1 = parseFloat(cell1);
+                cell2 = parseFloat(cell2);
+
+                return isAsc ? cell1 - cell2 : cell2 - cell1;
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+        }
+    </script>
+</body>
+</html>
+

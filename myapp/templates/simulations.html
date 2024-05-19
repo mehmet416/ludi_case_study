@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sortable:hover {
+            cursor: pointer;
+            color: darkblue;
+        }
+        .progress-bar {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Simulations</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="sortable" onclick="sortTable(0)">Simulation ID</th>
+                <th class="sortable" onclick="sortTable(1)">Simulation Name</th>
+                <th class="sortable" onclick="sortTable(2)">Company ID</th>
+                <th class="sortable" onclick="sortTable(3)">Company Name</th>
+                <th class="sortable" onclick="sortTable(4)">Number of Users</th>
+                <th class="sortable" onclick="sortTable(5)">Average Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for simulation in simulations %}
+            <tr>
+                <td>{{ simulation.simulation_id }}</td>
+                <td>{{ simulation.simulation_name }}</td>
+                <td>{{ simulation.company_id }}</td>
+                <td>{{ simulation.company_name }}</td>
+                <td>{{ simulation.number_of_users }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ simulation.average_progress }}%;" aria-valuenow="{{ simulation.average_progress }}" aria-valuemin="0" aria-valuemax="100">{{ simulation.average_progress }}%</div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  <script>
+        function sortTable(n) {
+            const table = document.querySelector('table');
+            let rows = Array.from(table.rows).slice(1);
+            let isAsc = table.rows[0].cells[n].classList.toggle('asc');
+
+            rows.sort((row1, row2) => {
+                let cell1 = row1.cells[n].textContent.trim();
+                let cell2 = row2.cells[n].textContent.trim();
+
+                // Handle numeric sorting
+                if (!isNaN(cell1) && !isNaN(cell2)) {
+                    return isAsc ? cell1 - cell2 : cell2 - cell1;
+                }
+
+                // Handle string sorting
+                return isAsc ? cell1.localeCompare(cell2) : cell2.localeCompare(cell1);
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+        }
+    </script>
+</body>
+</html>
