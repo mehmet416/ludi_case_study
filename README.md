@@ -1,6 +1,4 @@
 # Ludi Case Study
-## Project Title: Ludi Case Study Presentation
-
 ### Overview:
 
 This project is a web application aimed at presenting the Ludi Case Study. It provides an interactive interface for users to explore different sections of the case study, including Users, Simulations, Companies, and a Main Page. Each section offers various functionalities for users to interact with the data effectively.
